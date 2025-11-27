@@ -1,0 +1,14 @@
+version: "3.9"
+
+services:
+  pgvector-db:
+    image: pgvector/pgvector:pg16
+    container_name: pgvector-db
+    environment:
+      POSTGRES_USER: localmind
+      POSTGRES_PASSWORD: localmind
+      POSTGRES_DB: localmind
+    ports:
+      - "5434:5432"
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql:ro
