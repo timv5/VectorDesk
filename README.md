@@ -16,3 +16,9 @@ User question → Embedding → Vector DB → Retrieve top chunks → Construct 
 - sudo apt python3 -m venv .venv
 - source .venv/bin/activate
 - pip install sentence-transformers python-docx psycopg2-binary // local embedding model, read word docs, connect to postgres
+
+- ollama serve
+- ollama pull llama3.2
+- cd ~/Documents/personal/projects/VectorDesk
+- source .venv/bin/activate
+- pip install requests
