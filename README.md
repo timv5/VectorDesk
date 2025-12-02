@@ -1,5 +1,5 @@
 # VectorDesk
-Local, Private, Document-Based Question-Answering System
+Local, Private, Document-Based Question-Answering System using LLM.
 
 ## Description
 VectorDesk is an entirely local AI-powered assistant designed to answer questions using your internal company documents.
