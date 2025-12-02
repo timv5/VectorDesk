@@ -1,4 +1,4 @@
-# VectorDesk
+# QABot
 Local, Private, Document-Based Question-Answering System using LLM.
 
 ## Description
