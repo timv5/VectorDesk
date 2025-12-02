@@ -10,6 +10,10 @@ This project is a fully private and fully offline alternative to cloud-based AI 
 ## How does it work? 
 User question → Embedding → Vector DB → Retrieve top chunks → Construct prompt → LLM generates answer → Return to user
 
+## How can you run it?
+in the root project simply run: 
+```./run_stack.sh```
+
 The system is split into two independent Python processors:
 
 ### **1. embeddings-processor**

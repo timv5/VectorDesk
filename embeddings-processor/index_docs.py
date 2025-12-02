@@ -6,10 +6,12 @@ from psycopg2.extras import execute_values
 from docx import Document
 from sentence_transformers import SentenceTransformer
 
-
 DATA_DIR = "./data"
-DB_DSN = "dbname=localmind user=localmind password=localmind host=localhost port=5434"
-EMBED_MODEL_NAME = "all-MiniLM-L6-v2"
+DB_DSN = os.getenv(
+    "DB_DSN",
+    "dbname=localmind user=localmind password=localmind host=localhost port=5434",
+)
+EMBED_MODEL_NAME = os.getenv("EMBED_MODEL_NAME", "all-MiniLM-L6-v2")
 
 
 def load_docx_text(path: str) -> str:

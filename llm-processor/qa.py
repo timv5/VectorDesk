@@ -1,3 +1,4 @@
+import os
 import json
 from typing import List, Tuple, Any
 
@@ -8,11 +9,14 @@ import requests
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 
-
 # === CONFIG ===
-DB_DSN = "dbname=localmind user=localmind password=localmind host=localhost port=5434"
-EMBED_MODEL_NAME = "all-MiniLM-L6-v2"
-OLLAMA_MODEL = "llama3.2"
+DB_DSN = os.getenv(
+    "DB_DSN",
+    "dbname=localmind user=localmind password=localmind host=localhost port=5434",
+)
+EMBED_MODEL_NAME = os.getenv("EMBED_MODEL_NAME", "all-MiniLM-L6-v2")
+OLLAMA_MODEL = os.getenv("OLLAMA_MODEL", "llama3.2")
+OLLAMA_URL = os.getenv("OLLAMA_URL", "http://localhost:11434")
 
 embedder = SentenceTransformer(EMBED_MODEL_NAME)
 
@@ -59,7 +63,7 @@ def call_llm(prompt: str) -> str:
     Call local Ollama model with the given prompt and return the full text response.
     """
     resp = requests.post(
-        "http://localhost:11434/api/generate",
+        f"{OLLAMA_URL}/api/generate",
         json={"model": OLLAMA_MODEL, "prompt": prompt},
         stream=True,
     )

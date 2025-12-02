@@ -12,3 +12,39 @@ services:
       - "5434:5432"
     volumes:
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U localmind"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  ollama:
+    image: ollama/ollama:latest
+    container_name: ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama-data:/root/.ollama
+    restart: unless-stopped
+
+  app:
+    build:
+      context: ..
+      dockerfile: ./infrastructure/Dockerfile
+    container_name: vectordesk-app
+    depends_on:
+      pgvector-db:
+        condition: service_healthy
+      ollama:
+        condition: service_started
+    environment:
+      DB_DSN: dbname=localmind user=localmind password=localmind host=pgvector-db port=5432
+      EMBED_MODEL_NAME: all-MiniLM-L6-v2
+      OLLAMA_MODEL: llama3.2
+      OLLAMA_URL: http://ollama:11434
+    ports:
+      - "8000:8000"
+    restart: unless-stopped
+
+volumes:
+  ollama-data:
